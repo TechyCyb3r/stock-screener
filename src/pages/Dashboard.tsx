@@ -178,7 +178,7 @@ export function Dashboard() {
         <aside
           className={`
             w-full flex-shrink-0 flex-col bg-[#0a0a0f] border-b border-gray-800/40
-            max-h-[40vh] ${showFilters ? 'flex' : 'hidden'}
+            max-h-[35vh] ${showFilters ? 'flex' : 'hidden'}
           `}
         >
           <div className="flex-1 min-h-0 h-full overflow-y-auto sidebar-scroll-sm p-3 space-y-3">
@@ -194,8 +194,8 @@ export function Dashboard() {
           </div>
         </main>
 
-        {/* Bottom tabs panel - smooth scroll */}
-        <aside className="w-full flex-shrink-0 flex flex-col border-t border-gray-800/40 bg-[#0a0a0f] max-h-[45vh] overflow-y-auto sidebar-scroll-sm">
+        {/* Bottom tabs panel - smooth scroll with proper height */}
+        <aside className="w-full flex-shrink-0 flex flex-col border-t border-gray-800/40 bg-[#0a0a0f] max-h-[40vh] overflow-y-auto sidebar-scroll-sm">
           <div className="flex-shrink-0 border-b border-gray-800/50 p-2">
             <div className="grid grid-cols-4 gap-1 rounded-lg bg-gray-900/70 p-1">
               {[
@@ -248,9 +248,14 @@ export function Dashboard() {
             </div>
           </div>
         </aside>
+
+        <footer className="flex-shrink-0 border-t border-gray-800/50 bg-[#0a0a0f]/95 px-4 py-2 text-center text-[11px] font-medium text-gray-500">
+          Developed by Himanshu Agarwal
+        </footer>
       </div>
 
-      <footer className="flex-shrink-0 border-t border-gray-800/50 bg-[#0a0a0f]/95 px-4 py-2 text-center text-[11px] font-medium text-gray-500">
+      {/* Footer for desktop/tablet - outside mobile section */}
+      <footer className="hidden md:block flex-shrink-0 border-t border-gray-800/50 bg-[#0a0a0f]/95 px-4 py-2 text-center text-[11px] font-medium text-gray-500">
         Developed by Himanshu Agarwal
       </footer>
     </div>

@@ -105,9 +105,25 @@ export const useStockStore = create<StockStore>((set, get) => ({
       priceSimulator.init(stocks);
       priceSimulator.toggle(); // Start live updates by default
 
-      // Subscribe to price updates
+      // Subscribe to batch price updates only (much more efficient than individual)
+      let updateTimer: ReturnType<typeof setTimeout> | null = null;
       priceSimulator.onPriceUpdate((updatedStock: Stock) => {
-        get().updateStock(updatedStock);
+        const state = get();
+        const allStocks = state.allStocks.map((s) =>
+          s.id === updatedStock.id ? updatedStock : s
+        );
+        const selectedStock = state.selectedStock?.id === updatedStock.id ? updatedStock : state.selectedStock;
+        
+        // Batch filter calls using requestAnimationFrame pattern
+        // Only reapply filters once every 200ms max
+        set({ allStocks, selectedStock });
+        
+        if (!updateTimer) {
+          updateTimer = setTimeout(() => {
+            get().reapplyFilters();
+            updateTimer = null;
+          }, 200);
+        }
       });
 
       // Load first 20 stocks only
@@ -238,9 +254,6 @@ export const useStockStore = create<StockStore>((set, get) => ({
     if (state.selectedStock?.id === updatedStock.id) {
       set({ selectedStock: updatedStock });
     }
-
-    // Reapply filters to get updated filteredStocks
-    get().reapplyFilters();
   },
 
   batchUpdateStocks: (updatedStocks: Stock[]) => {
@@ -253,8 +266,6 @@ export const useStockStore = create<StockStore>((set, get) => ({
     if (state.selectedStock && updateMap.has(state.selectedStock.id)) {
       set({ selectedStock: updateMap.get(state.selectedStock.id)! });
     }
-
-    get().reapplyFilters();
   },
 
   reapplyFilters: () => {
