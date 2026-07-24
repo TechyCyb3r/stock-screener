@@ -174,10 +174,10 @@ export function Dashboard() {
       {/* ================================================================
           MOBILE (<768px): Single scrollable column layout
           ================================================================ */}
-      <div className="flex md:hidden flex-1 min-h-0 flex-col overflow-y-auto sidebar-scroll-sm">
+      <div className="flex md:hidden flex-1 min-h-0 flex-col overflow-hidden">
         {/* Filters Panel */}
         {showFilters && (
-          <div className="flex-shrink-0 bg-[#0a0a0f] border-b border-gray-800/40 p-3 space-y-3">
+          <div className="flex-shrink-0 bg-[#0a0a0f] border-b border-gray-800/40 p-3 space-y-3 overflow-y-auto max-h-[35vh]">
             <PriceTrendChart />
             <FilterPanel />
           </div>
@@ -185,15 +185,15 @@ export function Dashboard() {
 
         {/* Stock Table */}
         <div className="flex-shrink-0 px-2 py-2">
-          <div className="h-[300px]">
+          <div className="h-[280px]">
             <StockTable />
           </div>
         </div>
 
-        {/* Bottom Tabs */}
-        <div className="flex-shrink-0 border-t border-gray-800/40 bg-[#0a0a0f]">
+        {/* Bottom Tabs - takes remaining space with internal scroll */}
+        <div className="flex-1 min-h-0 flex flex-col border-t border-gray-800/40 bg-[#0a0a0f]">
           {/* Tab Buttons */}
-          <div className="border-b border-gray-800/50 p-2">
+          <div className="flex-shrink-0 border-b border-gray-800/50 p-2">
             <div className="grid grid-cols-4 gap-1 rounded-lg bg-gray-900/70 p-1">
               {[
                 { key: 'graph', label: 'Graph', icon: <BiCandles size={15} /> },
@@ -219,8 +219,8 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* Tab Content */}
-          <div className="p-2 sm:p-3">
+          {/* Tab Content - scrollable */}
+          <div className="flex-1 min-h-0 overflow-y-auto sidebar-scroll-sm p-2 sm:p-3">
             {/* Graph/Timeframe Tab */}
             {activeTab === 'timeframe' && (
               <div>
@@ -245,12 +245,12 @@ export function Dashboard() {
               </div>
             )}
           </div>
-        </div>
 
-        {/* Footer */}
-        <footer className="flex-shrink-0 border-t border-gray-800/50 bg-[#0a0a0f]/95 px-4 py-2 text-center text-[11px] font-medium text-gray-500">
-          Developed by Himanshu Agarwal
-        </footer>
+          {/* Footer */}
+          <footer className="flex-shrink-0 border-t border-gray-800/50 bg-[#0a0a0f]/95 px-4 py-3 pb-4 text-center text-[11px] font-medium text-gray-500">
+            Developed by Himanshu Agarwal
+          </footer>
+        </div>
       </div>
 
       {/* Footer for desktop/tablet - outside mobile section */}
