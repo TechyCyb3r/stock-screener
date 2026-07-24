@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+ * Global Styles - Professional Stock Screener Theme
+ * ============================================================ */
+
+:root {
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --gradient-blue: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --gradient-green: linear-gradient(135deg, #22c55e, #16a34a);  --gradient-red: linear-gradient(135deg, #ef4444, #dc2626);
+  --gradient-card: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+  --glow-blue: 0 0 20px rgba(59, 130, 246, 0.15);
+  --glow-green: 0 0 20px rgba(34, 197, 94, 0.15);
+}
+
+* {
+  font-family: var(--font-primary);
+  transition-property: background-color, border-color, color, transform, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0a0a0f;
+  color: #f3f4f6;
+  font-family: var(--font-primary);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+.sidebar-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 #0a0a0f;
+  overscroll-behavior: contain;
+}
+
+.sidebar-scroll::-webkit-scrollbar {
+  width: 7px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #334155;
+  border: 2px solid #0a0a0f;
+  border-radius: 999px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Thicker scrollbar for mobile/tablet - always visible */
+.sidebar-scroll-sm {
+  scrollbar-width: thin;
+  scrollbar-color: #4b5563 #0a0a0f;
+  overscroll-behavior: contain;
+}
+
+.sidebar-scroll-sm::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.sidebar-scroll-sm::-webkit-scrollbar-track {
+  background: #0a0a0f;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.sidebar-scroll-sm::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border: 2px solid #0a0a0f;
+  border-radius: 999px;
+  min-height: 40px;
+}
+
+.sidebar-scroll-sm::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Force scrollbar to always show on mobile/tablet */
+@media (hover: none) and (max-width: 1023px) {
+  .sidebar-scroll-sm {
+    -webkit-overflow-scrolling: touch;
+  }
+  .sidebar-scroll-sm::-webkit-scrollbar-thumb {
+    background: #5b677a;
+    border: 2px solid #0a0a0f;
+    border-radius: 999px;
+  }
+}
+
+/* Table header horizontal scroll sync */
+.header-scroll-sync {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.header-scroll-sync::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide number input arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: #fff;
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes live-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.animate-live-dot {
+  animation: live-dot 1.5s ease-in-out infinite;
+}
+
+/* Glass morphism effect */
+.glass-card {
+  background: var(--gradient-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+/* Neon glow effects */
+.neon-glow-blue {
+  box-shadow: var(--glow-blue);
+}
+
+.neon-glow-green {
+  box-shadow: var(--glow-green);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: var(--gradient-blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
