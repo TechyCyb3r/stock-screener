@@ -93,7 +93,7 @@ export function Dashboard() {
       {/* ================================================================
           TABLET (768px-1023px): Stock table top, graph+sidebar bottom
           ================================================================ */}
-      <div className="hidden md:flex lg:hidden flex-1 min-h-0 flex-col">
+      <div className="hidden md:flex lg:hidden flex-1 min-h-0 flex-col overflow-hidden">
         {/* Filters Panel - collapsible on tablet */}
         <aside
           className={`
@@ -107,11 +107,9 @@ export function Dashboard() {
           </div>
         </aside>
 
-        {/* Top: Stock Table - full width, no side padding */}
-        <div className="flex-shrink-0">
-          <div className="h-[270px] overflow-hidden rounded-none glass-card">
-            <StockTable />
-          </div>
+        {/* Top: Stock Table - full width, fixed height with internal scroll */}
+        <div className="flex-shrink-0 h-[270px]">
+          <StockTable />
         </div>
 
         {/* Bottom: Entire section scrolls together - Graph 50% + Sidebar 50% */}
@@ -174,7 +172,7 @@ export function Dashboard() {
       </div>
 
       {/* ================================================================
-          MOBILE (<768px): Stacked tab layout
+          MOBILE (<768px): Stacked tab layout - smooth scrolling
           ================================================================ */}
       <div className="flex md:hidden flex-1 min-h-0 flex-col overflow-hidden">
         <aside
@@ -183,19 +181,21 @@ export function Dashboard() {
             max-h-[40vh] ${showFilters ? 'flex' : 'hidden'}
           `}
         >
-          <div className="flex-1 min-h-0 h-full overflow-y-auto sidebar-scroll p-3 space-y-3">
+          <div className="flex-1 min-h-0 h-full overflow-y-auto sidebar-scroll-sm p-3 space-y-3">
             <PriceTrendChart />
             <FilterPanel />
           </div>
         </aside>
 
-        <main className="flex-1 min-w-0 flex flex-col overflow-hidden bg-[#0a0a0f]">
-          <div className="flex-1 p-2 sm:p-3 overflow-hidden">
+        {/* Main content area - table takes flex-1 with internal scroll */}
+        <main className="flex-1 min-h-0 flex flex-col bg-[#0a0a0f]">
+          <div className="flex-1 min-h-0 px-2 sm:px-3 py-2">
             <StockTable />
           </div>
         </main>
 
-        <aside className="w-full flex-shrink-0 flex flex-col border-t border-gray-800/40 bg-[#0a0a0f] max-h-[45vh] overflow-y-auto sidebar-scroll">
+        {/* Bottom tabs panel - smooth scroll */}
+        <aside className="w-full flex-shrink-0 flex flex-col border-t border-gray-800/40 bg-[#0a0a0f] max-h-[45vh] overflow-y-auto sidebar-scroll-sm">
           <div className="flex-shrink-0 border-b border-gray-800/50 p-2">
             <div className="grid grid-cols-4 gap-1 rounded-lg bg-gray-900/70 p-1">
               {[
@@ -222,9 +222,9 @@ export function Dashboard() {
             </div>
           </div>
 
-          <div className="flex-1 min-h-0 overflow-y-auto sidebar-scroll">
+          <div className="flex-1 min-h-0 overflow-y-auto">
             {/* Graph/Timeframe Tab */}
-            <div className={`${activeTab === 'timeframe' ? 'block animate-slide-up' : 'hidden'}`}>
+            <div className={`${activeTab === 'timeframe' ? 'block' : 'hidden'}`}>
               <div className="p-2 sm:p-3">
                 <CandlestickChart />
               </div>
@@ -234,14 +234,14 @@ export function Dashboard() {
             </div>
 
             {/* Market Tab */}
-            <div className={`${activeTab === 'market' ? 'block animate-slide-up' : 'hidden'}`}>
+            <div className={`${activeTab === 'market' ? 'block' : 'hidden'}`}>
               <div className="px-2 sm:px-3 py-3">
                 <GainerLoserList />
               </div>
             </div>
 
             {/* Stats Tab */}
-            <div className={`${activeTab === 'stats' ? 'block animate-slide-up' : 'hidden'}`}>
+            <div className={`${activeTab === 'stats' ? 'block' : 'hidden'}`}>
               <div className="px-2 sm:px-3 py-3">
                 <StockDetailCard />
               </div>

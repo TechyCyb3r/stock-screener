@@ -107,6 +107,51 @@ body {
   }
 }
 
+/* ============================================================
+ * Mobile Scroll Smoothness Improvements
+ * ============================================================ */
+
+/* Smooth momentum scrolling on all scrollable containers for mobile */
+@media (max-width: 767px) {
+  .overflow-auto,
+  .overflow-y-auto,
+  .sidebar-scroll,
+  .sidebar-scroll-sm {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    overscroll-behavior: contain;
+  }
+
+  /* Prevent layout jumps on mobile when scrollbar appears/disappears */
+  .overflow-auto,
+  .overflow-y-auto {
+    scrollbar-gutter: stable;
+  }
+
+  /* Reduce transition duration on mobile for smoother feel */
+  * {
+    transition-duration: 150ms;
+  }
+
+  /* Better touch targets for tabs */
+  button {
+    touch-action: manipulation;
+  }
+}
+
+/* Smooth momentum scrolling for all scrollable containers */
+.overflow-auto,
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Improve scroll container height calculation on mobile */
+@supports (-webkit-touch-callout: none) {
+  .h-screen {
+    height: -webkit-fill-available;
+  }
+}
+
 /* Table header horizontal scroll sync */
 .header-scroll-sync {
   overflow-x: auto;

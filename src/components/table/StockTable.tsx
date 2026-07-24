@@ -162,16 +162,33 @@ export function StockTable() {
     const container = tableContainerRef.current;
     if (!container) return;
 
+    let scrollTimer: ReturnType<typeof setTimeout> | null = null;
+
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
-      // Load more when within 200px of bottom
-      if (scrollHeight - scrollTop - clientHeight < 200) {
-        loadMoreStocks();
+      // Load more when within 150px of bottom (lower threshold for mobile)
+      if (scrollHeight - scrollTop - clientHeight < 150) {
+        // Debounce to avoid rapid-fire calls
+        if (!scrollTimer) {
+          scrollTimer = setTimeout(() => {
+            loadMoreStocks();
+            scrollTimer = null;
+          }, 100);
+        }
+      } else {
+        if (scrollTimer) {
+          clearTimeout(scrollTimer);
+          scrollTimer = null;
+        }
       }
     };
 
-    container.addEventListener('scroll', handleScroll);
-    return () => container.removeEventListener('scroll', handleScroll);
+    // Use passive listener for better scroll performance on mobile
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      if (scrollTimer) clearTimeout(scrollTimer);
+    };
   }, [loadMoreStocks]);
 
   if (loadingState === 'loading') {
